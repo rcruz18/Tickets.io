@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Artisan;
 
 class CrudGenerator extends Command
 {
@@ -11,7 +14,7 @@ class CrudGenerator extends Command
      *
      * @var string
      */
-    protected $signature = 'crud:generator {name: Class (singular) for example user}';
+    protected $signature = 'crud:generator {name : Class (singular) for example user}';
     protected $description = 'Create CRUD Operations';
     public function __construct()
     {
