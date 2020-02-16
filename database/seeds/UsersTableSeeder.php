@@ -3,22 +3,18 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class UsersTableSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+class UsersTableSeeder extends Seeder{
+
+    public function run(){
         DB::table('users')->insert([
-            'name' => 'Admin Admin',
-            'email' => 'admin@argon.com',
-            'email_verified_at' => now(),
+            'name' => 'Administrator',
+            'lastname' => 'DevoLabs',
+            'username' => 'administrator',
+            'email' => 'support@devolabs.io',
             'password' => Hash::make('secret'),
+            'api_token' => Str::random(60),
             'created_at' => now(),
             'updated_at' => now()
         ]);
-    }
-}
+    }//end function
+}//end class
