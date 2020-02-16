@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('User Management')])
 
 @section('content')
-    @include('users.partials.header', ['title' => __('Add User')])   
+    @include('users.partials.header', ['title' => __('Add User')])
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <form method="post" action="{{ route('user.store') }}" autocomplete="off">
                             @csrf
-                            
+
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
@@ -30,6 +30,26 @@
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group{{ $errors->has('lastname') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-lastname">{{ __('Last Name') }}</label>
+                                    <input type="text" name="lastname" id="input-lastname" class="form-control form-control-alternative{{ $errors->has('lastname') ? ' is-invalid' : '' }}" placeholder="{{ __('Last Name') }}" value="{{ old('lastname') }}" required autofocus>
+
+                                    @if ($errors->has('Lastname'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('Lastname') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group{{ $errors->has('username') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-username">{{ __('User Name') }}</label>
+                                    <input type="text" name="username" id="input-username" class="form-control form-control-alternative{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('User Name') }}" value="{{ old('username') }}" required autofocus>
+
+                                    @if ($errors->has('Username'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('Username') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -46,7 +66,7 @@
                                 <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-password">{{ __('Password') }}</label>
                                     <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}" value="" required>
-                                    
+
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('password') }}</strong>
@@ -67,7 +87,7 @@
                 </div>
             </div>
         </div>
-        
+
         @include('layouts.footers.auth')
     </div>
 @endsection
