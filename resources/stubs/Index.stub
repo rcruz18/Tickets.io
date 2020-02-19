@@ -1,0 +1,77 @@
+@extends('layouts.app', ['title' => __('**modelName** Management')])
+
+@section('content')
+    @include('**modelNamePluralLowerCase**.partials.header', ['title' => __('**modelName** Management')])
+
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">{{ __('**modelNamePluralucFirst** List') }}</h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                @include('layouts.components.actions_list', ['route'=>'**modelNamePluralLowerCase**.create', 'title'=>'Add **modelName**'])
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        @if (session('status'))
+                            @include('layouts.components.alerts')
+                        @endif
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">{{ __('ID') }}</th>
+                                    <!-- <th scope="col">{{ __('Example') }}</th> -->
+
+                                    <th scope="col">{{ __('Creation Date') }}</th>
+                                    <th class='text-right' scope="col">{{ __('Action') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($**modelNamePluralLowerCase** as $**modelNameSingularLowerCase**)
+                                    <tr>
+                                        <td>{{ $**modelNameSingularLowerCase**->id }}</td>
+                                        <!-- <td>{{ $**modelNameSingularLowerCase**->example }}</td> -->
+
+                                        <td>{{ $**modelNameSingularLowerCase**->created_at->format('d/m/Y H:i') }}</td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                                                  <a class="dropdown-item" href="{{ route('**modelNamePluralLowerCase**.edit', $**modelNameSingularLowerCase**) }}"><i class='fa fa-1x fa-pencil' ></i><span>{{ __('Edit') }}</span></a>
+                                                  <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-notification-{{ $**modelNameSingularLowerCase**->id }}" >
+                                                      <i class='fa fa-1x fa-trash' ></i><span >{{ __('Delete') }}</span>
+                                                  </button>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @include('layouts.components.modal_delete', ['model' => $**modelNameSingularLowerCase**, 'title'=> '**modelName**', 'route'=> '**modelNamePluralLowerCase**.destroy'])
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer py-4">
+                    <nav class="d-flex justify-content-end" aria-label="...">
+                            {{ $**modelNamePluralLowerCase**->links() }}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @include('layouts.footers.auth')
+    </div>
+@endsection

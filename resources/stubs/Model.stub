@@ -6,4 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class {{modelName}} extends Model{
     protected $guarded = ['id'];
-}
+
+    protected $fillable = [
+        // 'example', 'example2'
+    ];
+}//end function

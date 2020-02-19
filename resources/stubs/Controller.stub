@@ -7,16 +7,48 @@ use App\Http\Requests\{{modelName}}Request;
 use App\{{modelName}};
 
 class {{modelName}}Controller extends Controller{
-  public function index(){
-    ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
-    return response()->json(${{modelNamePluralLowerCase}});
+
+  public function index({{modelName}} $model){
+    return view('{{modelNamePluralLowerCase}}.index', ['{{modelNamePluralLowerCase}}' => $model->paginate(15)]);
   }//end function
 
+  public function create()  {
+      return view('{{modelNamePluralLowerCase}}.create');
+  }//end function
+  public function edit({{modelName}} ${{modelNameSingularLowerCase}}){
+      return view('{{modelNamePluralLowerCase}}.edit', compact('{{modelNameSingularLowerCase}}'));
+  }//end function
+
+
   public function store({{modelName}}Request $request){
+
+    $request = Request::merge(array_map("trim", $request->all()));
+    $valid_request = $request->validate([
+      //'{{modelName}}' => 'required|unique:{{modelNamePluralLowerCase}}|max:16',
+      //'description' => 'required|max:32',
+    ]);
+    ${{modelNameSingularLowerCase}} = {{modelName}}::create($valid_request);
+    return redirect()->route('{{modelNamePluralLowerCase}}.index')->with([
+       'status' => __('{{modelName}} created.')
+      ,'type'=>'success'
+      ,'strong' => __('Success').'!'
+      ,'icon' => 'fa-check'
+    ]);
+
+  }//end function
+
+  //for json response
+  /*public function index(){
+    ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
+    return response()->json(${{modelNamePluralLowerCase}});
+  }//end function*/
+
+  //for json response
+  /*public function store({{modelName}}Request $request){
     $request = Request::merge(array_map("trim", $request->all()));
     ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
     return response()->json(${{modelNameSingularLowerCase}}, 201);
-  }//end function
+  }//end function*/
 
   public function show($id){
     ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
@@ -26,11 +58,23 @@ class {{modelName}}Controller extends Controller{
   public function update({{modelName}}Request $request, $id){
     ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
     ${{modelNameSingularLowerCase}}->update($request->all());
-    return response()->json(${{modelNameSingularLowerCase}}, 200);
+    return redirect()->route('{{modelNamePluralLowerCase}}.index')->with([
+       'status' => __('{{modelName}} updated.')
+      ,'type'=>'success'
+      ,'strong' => __('Success').'!'
+      ,'icon' => 'fa-check'
+    ]);
+    //return response()->json(${{modelNameSingularLowerCase}}, 200);
   }//end function
 
   public function destroy($id){
     {{modelName}}::destroy($id);
-    return response()->json(null, 204);
+    return redirect()->route('{{modelNamePluralLowerCase}}.index')->with([
+       'status' => __('{{modelName}} deleted.')
+      ,'type'=>'default'
+      ,'strong' => __('Success').'!'
+      ,'icon' => 'fa-warning'
+    ]);
+    //return response()->json(null, 204);
   }//end function
 }//end class
